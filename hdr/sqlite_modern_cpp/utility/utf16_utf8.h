@@ -9,8 +9,11 @@
 namespace sqlite {
 	namespace utility {
 		inline std::string utf16_to_utf8(const std::u16string &input) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 			struct : std::codecvt<char16_t, char, std::mbstate_t> {
 			} codecvt;
+#pragma clang diagnostic pop
 			std::mbstate_t state{};
 			std::string result((std::max)(input.size() * 3 / 2, std::size_t(4)), '\0');
 			const char16_t *remaining_input = input.data();
